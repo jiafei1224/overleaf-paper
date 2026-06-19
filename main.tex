@@ -10,10 +10,12 @@
 \usepackage{array}
 \usepackage{parskip}
 
-\title{\textbf{Scaling a Rational Approach to Cooperative Intelligence}\\[0.5em]
+\title{\textbf{Spatial Intelligence for Embodied AI:\\
+Foundation Models that Perceive, Reason, and Act}\\[0.5em]
 \large Presidential Young Professorship (PYP) Grant Proposal}
-\author{Tan Zhi Xuan\\[0.3em]
-\small Assistant Professor, NUS Department of Computer Science}
+\author{Duan Jiafei\\[0.3em]
+\small Presidential Young Professor (Incoming), NUS School of Computing\\
+\small Director, MAGIC Lab}
 \date{}
 
 \begin{document}
@@ -26,90 +28,87 @@
 
 \section{Executive Summary}
 
-Cooperation is a core aspect of human-like intelligence, and essential for AI agents that aim to assist human users or integrate with human teams and institutions. However, current approaches to building cooperative AI agents face significant challenges: Systems based on large language models (LLMs) struggle with reliable planning\footnote{S.~Kambhampati et al., ``LLMs can't plan, but can help planning in LLM-modulo frameworks,'' ICML 2024.} and theory-of-mind reasoning,\footnote{H.~Kim et al., ``Hypothesis-driven theory-of-mind reasoning for large language models,'' arXiv:2502.11881, 2025.} while approaches grounded in rational probabilistic inference and decision-making have historically been limited by computational intractability\footnote{D.~Malik et al., ``An efficient, generalized Bellman update for cooperative inverse reinforcement learning,'' ICML 2018.} and the lack of accessible engineering frameworks. However, my research has demonstrated that it's possible to overcome these limitations, scaling a rational, model-based approach to cooperative intelligence that is built upon efficient algorithms and platforms for probabilistic programming [AISTATS'23] and model-based planning [SM Thesis].
+The central challenge of embodied AI is teaching machines to act reliably in the physical world. Despite remarkable advances in vision and language understanding, modern robots still fail at tasks that a child finds trivial. The root cause is not a lack of data or compute, but a fundamental absence of \textit{spatial intelligence}: the ability to ground language in space, infer geometry and physical dynamics, and use these representations as explicit intermediates for planning and control. Current vision-language-action (VLA) models bypass this by mapping raw pixels and language tokens directly to low-level motor commands---an end-to-end shortcut that trades interpretability and sample efficiency for brittle, environment-specific policies that collapse under distribution shift.
 
-This proposal outlines a research program that will scale a rational approach to cooperative intelligence even further, advancing this approach across three interconnected levels: \textbf{(i)} AI agents that reliably assist individual users in complex environments like the open Web; \textbf{(ii)} AI agents that can understand and operate with multi-agent teams, institutional structure, and social norms; \textbf{(iii)} Socio-technical infrastructure that promotes human and AI cooperation through frameworks for rational deliberation and alignment with shared normative principles. These advances will enable applications from AI web agents and AI co-players in video games to norm-adaptive autonomous vehicles and AI-augmented group deliberation.
+My research corrects this by making spatial reasoning an \textit{explicit, steerable, and data-efficient} stage of embodied decision-making. This program spans a coherent arc: from language-conditioned 2D spatial grounding [RoboPoint, PointArena], through dynamic 3D spatial reasoning benchmarks and open-vocabulary 3D perception [SAT, WildDet3D], to open vision-language-action models that decompose embodied action into depth-aware perception, mid-level spatial plans, and low-level control [MolmoAct, MolmoAct2]. The resulting models achieve \textbf{70.5\% zero-shot} performance on SimplerEnv Visual Matching, surpassing closed-source $\pi_0$ and GR00T N1.5, with +23.3\% OOD generalization improvement. MolmoAct2 has been independently replicated and deployed in kitchen, café, and wetlab settings, including by the Stanford CRISPR Lab, and our models and datasets have surpassed 300K+ HuggingFace downloads.
 
-The proposed research builds upon my past work, which has already achieved significant breakthroughs in the computational efficiency and practical applicability of model-based cooperative AI. These include Sequential Inverse Plan Search (SIPS), which provides a 100--1000x speed-up over previous baselines for Bayesian goal inference [NeurIPS'20]; Cooperative Language-Guided Inverse Plan Search (CLIPS), which enables pragmatic instruction following with appropriate uncertainty [AAMAS'24a]; and Norm-Augmented Markov games for efficient learning of cooperative norms [AAMAS'24b]. These innovations demonstrate the feasibility of addressing core theoretical challenges in human-AI cooperation, and developing practical solutions that achieve order-of-magnitude improvements over previous baselines.
-
-Executing this program will require advancing core capabilities for human-like cooperation alongside improvements in engineering platforms, conceptual foundations, and real-world applications. My expertise in rational AI engineering --- combined with interdisciplinary knowledge across cognitive science, philosophy, and AI alignment --- uniquely positions me to tackle these challenges.
+This proposal outlines a research program at NUS to scale embodied spatial intelligence across three interconnected levels: \textbf{(i)} Embodied foundation models that reason in space before acting; \textbf{(ii)} Robust, failure-aware, and long-horizon embodied AI capable of real-world deployment; \textbf{(iii)} Open ecosystems, large-scale benchmarks, and automated data pipelines that accelerate the field. Together, these thrusts will enable robots that truly perceive, reason, and act---making embodied AI deployable far beyond controlled lab environments.
 
 \section{Aims / Objectives}
 
-This research program advances a framework for model-based cooperative intelligence across three interconnected scales: individual assistance, larger-scale cooperation, and societal infrastructure. Together, these objectives form a full-stack approach to building cooperative AI systems.
+This research program advances a unified framework for spatially intelligent embodied AI across three interconnected objectives:
 
-\subsubsection*{AI agents that reliably assist individual users}
+\subsubsection*{Embodied Foundation Models that Reason in Space}
 
-\textbf{Objective 1: AI agents that reliably assist individual users.} This objective focuses on developing AI agents capable of reliable goal inference and assistance in real-world applications. Current AI assistants often fail to accurately understand user intentions or reliably achieve user goals, especially when user instructions are ambiguous, or when tasks require long-horizon reasoning. To overcome these limitations, I aim to develop probabilistic programming and model-based planning frameworks for AI copilots, smart NPCs, and web agents that can robustly infer, understand, and achieve user goals. Unlike current approaches that rely heavily on unreliable and inefficient LLMs, this will enable AI assistants that infer posterior distributions over user goals from user actions and instructions, then plan safely and reliably to achieve those goals by reasoning over world models, all while using orders of magnitude less data and computation.
+\textbf{Objective 1: Embodied Foundation Models that Reason in Space.} Current VLA models treat robot control as a black-box input-output mapping, leaving spatial structure implicit and unverifiable. This objective develops \textit{Action Reasoning Models} (ARMs) that decompose embodied action into three explicit stages: (1) depth-aware perception tokens encoding a 2.5D scene representation; (2) mid-level spatial plans expressed as editable image-space trajectories; and (3) low-level actions conditioned on both. This decomposition makes spatial reasoning transparent, steerable by human operators, and far more data-efficient than end-to-end alternatives. I will scale this paradigm to bimanual manipulation, mobile manipulation, and long-horizon multi-step tasks, advancing the MolmoAct series [MolmoAct, MolmoAct2] toward a general-purpose open robotics foundation model deployable on consumer hardware.
 
-\subsubsection*{AI agents that cooperate in teams, institutions, and societies}
+\subsubsection*{Robust, Failure-Aware, and Long-Horizon Embodied AI}
 
-\textbf{Objective 2: AI agents that cooperate in teams, institutions, and societies.} This objective addresses the challenge of developing AI agents that can function effectively within larger social structures. While individual AI assistance is valuable, many contexts require coordination within teams of agents, and adherence to institutional roles and norms. My research will develop agents that understand and integrate with team dynamics, organizational hierarchies, and societal norms via multi-resolution multi-agent modeling. By modeling and learning about the social world at multiple levels of resolution, these agents will be able to cooperate appropriately in contexts such as traffic systems, human-robot teams, and digital workplaces, while maintaining appropriate levels of deference, initiative, and coordination.
+\textbf{Objective 2: Robust, Failure-Aware, and Long-Horizon Embodied AI.} Real-world deployment demands more than high average-case performance: robots must detect when they are failing, diagnose the cause, and recover without human intervention. This objective develops the science and engineering of \textit{failure-aware embodied AI}. Drawing on my work on AHA [AHA] and FailSafe [FailSafe]---which introduce failure-reasoning VLMs for detection, explanation, and recovery in manipulation---I will build a unified framework that closes the loop between perception, prediction, failure diagnosis, and replanning. Complementary work on memory-augmented architectures [SAM2Act] will extend reliable embodied AI to tasks requiring long-horizon state tracking and contextual memory.
 
-\subsubsection*{Infrastructure for human and AI cooperation}
+\subsubsection*{Open Ecosystems, Benchmarks, and Data for Embodied AI}
 
-\textbf{Objective 3: Infrastructure for human and AI cooperation.} This objective aims to create socio-technical infrastructure that enables effective human-AI cooperation at scale. Rather than focusing solely on agent capabilities, this work recognizes the need for systems that facilitate interaction, deliberation, and negotiation in human-AI ecosystems, so as to promote mutually beneficial outcomes and avoid AI-enabled conflict. To achieve this, I aim to advance the fundamental science of human deliberation and normative reasoning, grounding this work in rational models of human normativity\footnote{S.~Levine et al., ``Resource-rational contractualism: A triple theory of moral cognition,'' \textit{Behavioral and Brain Sciences}, 2024.} and computational frameworks for argumentation and negotiation.\footnote{L.~Amgoud and C.~Cayrol, ``A reasoning model based on the production of acceptable arguments,'' \textit{Annals of Mathematics and Artificial Intelligence}, 2002.}\textsuperscript{,}\footnote{I.~Rahwan et al., ``Argumentation-based negotiation,'' \textit{The Knowledge Engineering Review}, 2003.} This in turn will support the development of algorithms that aid human deliberation, and mechanisms that facilitate beneficial equilibria in the future AI economy.
+\textbf{Objective 3: Open Ecosystems, Benchmarks, and Data for Embodied AI.} Progress in embodied AI is bottlenecked by the scarcity of open, large-scale, and diverse robot data. This objective builds the infrastructure layer that the field needs: open data collection pipelines that do not require expensive teleoperation [AR2-D2, Manipulate-Anything]; large-scale navigation and manipulation benchmarks that stress-test generalization [COLOSSEUM, MolmoSpaces]; and multimodal spatial grounding benchmarks for evaluating foundation models [SAT, PointArena]. At NUS, I will establish the MAGIC Lab as a hub for releasing open robotics data, models, and benchmarks at a scale not previously available to the community.
 
 \section{Background \& Significance}
 
-Cooperative intelligence represents an open frontier in AI research.\footnote{A.~Dafoe et al., ``Cooperative AI: Machines must learn to find common ground,'' \textit{Nature}, 2021.} The ability of AI systems to reliably assist humans and cooperate with agents across multiple scales underpins a wide variety of AI applications\footnote{K.~M.~Collins et al., ``Building machines that learn and think with people,'' \textit{Nature Human Behaviour}, 2024.} --- from AI copilots and virtual assistants to autonomous vehicles and collaborative robots. Despite this centrality, current approaches to building cooperative AI systems face significant limitations that impede their reliability, efficiency, and safety at scale.
+Embodied AI---the ability of machines to perceive, reason about, and act in the physical world---represents one of the most consequential open frontiers in artificial intelligence.\footnote{Y.~LeCun, ``A path towards autonomous machine intelligence,'' \textit{Open Review}, 2022.} A robot that can reliably assist in home environments, hospitals, laboratories, or disaster sites would transform human productivity and quality of life. Despite enormous investment, today's robotic systems remain fragile outside tightly controlled settings: they struggle with novel objects, unexpected perturbations, long-horizon dependencies, and the rich variability of real human environments.
 
-The dominant paradigm in AI assistance today relies heavily on Large Language Models (LLMs), which have demonstrated impressive capabilities in natural language understanding and open-ended reasoning.\footnote{A.~Jaech et al., ``OpenAI o1 system card,'' arXiv:2412.16720, 2024.} Despite this, LLM-based systems exhibit critical shortcomings in reliability and safety, particularly in complex scenarios which require long-horizon planning or sophisticated theory-of-mind reasoning. A promising alternative with a long pedigree is \textbf{rational AI}: An approach to designing rational autonomous systems grounded in explicit probabilistic modeling and decision-making under uncertainty, including models of humans and their goals. However, rational approaches to AI have historically been constrained by computational intractability. Before my research, such approaches were often too slow for real-time interaction in complex environments, and lacked user-friendly engineering frameworks, preventing broader adoption despite their theoretical soundness.
+The dominant paradigm for robot learning---end-to-end imitation learning from large datasets of human demonstrations---has produced impressive results on in-distribution benchmarks.\footnote{T.~Z.~Zhao et al., ``Learning fine-grained bimanual manipulation with low-cost hardware,'' \textit{RSS}, 2023.}\textsuperscript{,}\footnote{A.~Brohan et al., ``RT-2: Vision-language-action models transfer web knowledge to robotic control,'' \textit{CoRL}, 2023.} However, these systems inherit a critical structural weakness: they compress spatial structure into opaque latent representations, with no explicit encoding of geometry, depth, or physical dynamics. As a result, they generalize poorly to out-of-distribution lighting, object poses, or task compositions, and cannot diagnose or recover from failures---because they have no internal model of what went wrong.
 
-During my PhD, I made significant progress in addressing these scaling challenges. Through innovations like Sequential Inverse Plan Search (SIPS), which achieves a 100--1000x speed-up in Bayesian goal inference over previous baselines [NeurIPS'20], Cooperative Language-Guided Inverse Plan Search (CLIPS), which enables uncertainty-aware instruction following by combining the linguistic abilities of LLMs with sound planning and inference algorithms [AAMAS'24a], and Norm-Augmented Markov Games, a Bayesian norm learning framework with orders of magnitude greater sample efficiency than model-free RL [AAMAS'24b], I have shown that model-based approaches to cooperative AI can be both theoretically grounded and practically efficient. My development of the PDDL.jl automated planning library [SM Thesis] and extensions to the Gen probabilistic programming system [AISTATS'23] has also significantly reduced the engineering barriers to developing planning algorithms and sequential Monte Carlo methods. These advances provide a foundation for the research program outlined in this proposal.
+My research addresses this gap by reconceiving embodied AI through the lens of \textit{spatial intelligence}. The key insight is that language and action can and should be mediated by explicit spatial representations: image-space affordance points [RoboPoint], dynamic 3D geometry [WildDet3D], spatial aptitude benchmarks [SAT], and depth-conditioned action trajectories [MolmoAct]. These intermediate representations make policies interpretable, editable, and generalizable in ways that purely end-to-end models are not.
 
-The significance of this research extends beyond technical innovation to address pressing societal concerns about AI alignment and safety. By advancing the science and engineering of cooperative intelligence across different scales --- from individual interaction to institutional coordination --- this research will contribute to building AI systems that not only assist humans more effectively, but that are aligned with normative principles and constraints that our society agrees upon [PhilStudies'24].
+This approach is validated by concrete results. RoboPoint [RoboPoint] has become a widely used baseline for language-grounded manipulation, and its data and task formulation have influenced spatial grounding in frontier VLMs. PointArena [PointArena] is now a de facto evaluation benchmark across model families including Molmo, Gemini, and Qwen. MolmoAct [MolmoAct] achieves 70.5\% zero-shot on SimplerEnv Visual Matching, surpassing $\pi_0$ and GR00T N1.5, with a 23.3\% improvement in OOD generalization. MolmoAct2 [MolmoAct2] has been independently deployed in kitchen, café, and wetlab settings including the Stanford CRISPR Lab. WildDet3D [WildDet3D] sets a new state of the art on Omni3D and has been deployed on iPhone, AR headsets, and robot manipulation systems. THE COLOSSEUM [COLOSSEUM] is a widely adopted benchmark for evaluating manipulation generalization.
+
+At NUS, I am uniquely positioned to advance this program. Singapore's strength in robotics manufacturing, healthcare automation, and smart environments creates natural application partners. My role as director of the MAGIC Lab will let me build the team, infrastructure, and collaborations needed to scale open embodied AI research.
 
 \section{Research Design \& Methods}
 
-My research program is structured around four categories of work: \textbf{(1) Cooperative Capabilities} that enable AI systems to cooperate with humans and other agents across multiple scales; \textbf{(2) Engineering Platforms} that increase the accessibility of model-based approaches to developing and deploying cooperative AI; \textbf{(3) Theoretical and Conceptual Foundations} that provide rigorous understanding of human-like cooperative intelligence; and \textbf{(4) Applications} that demonstrate and validate these advances in practical contexts. By advancing work across all four categories, this research program will deliver both fundamental insights and practical systems that embody those insights, achieving each of the objectives identified in Section~2.
+My research program is structured around four categories of work: \textbf{(1) Embodied Capabilities} for spatially intelligent perception and action; \textbf{(2) Engineering Platforms} that make open robotic foundation models accessible; \textbf{(3) Theoretical and Empirical Foundations} for spatial reasoning and embodied evaluation; and \textbf{(4) Real-World Applications} in manipulation, navigation, and human-robot collaboration. These categories are tightly coupled: theoretical advances motivate new capabilities, platforms lower the barrier to replication, and applications validate and stress-test the science.
 
-\subsubsection*{Objective 1: AI agents that reliably assist individual users}
-
-To enable the development of model-based AI assistants, work on this objective will be structured around research projects advancing core cooperative abilities for real-time assistance in grounded environments, alongside platforms and applications for assistive AI:
+\subsubsection*{Objective 1: Embodied Foundation Models that Reason in Space}
 
 \begin{itemize}
-  \item \textbf{Assistive Planning under Uncertainty} [\textit{Capabilities}]: Assistive agents have to take actions under uncertainty about the goals of human users, infer subtasks to achieve, and gather information about both the environment and user goals. To address this, I aim to develop algorithms for real-time cooperative planning in belief space, building upon prior work in pragmatic goal assistance [AAMAS'24a], belief-space planning, and Bayesian task delegation. This work will also leverage advances in tractable probabilistic programming to enable compact belief approximations and efficient belief updates, thereby overcoming tractability issues in belief-space planning.
+  \item \textbf{Scaling Action Reasoning Models (ARMs)} [\textit{Capabilities, Platforms}]: Building on MolmoAct and MolmoAct2, I will develop the next generation of ARMs that scale to bimanual and mobile manipulation. Key research questions include how to learn depth-conditioned action representations from diverse multi-embodiment data, how to compress 3D scene representations for low-latency inference on edge devices, and how to leverage internet-scale vision-language pretraining to bootstrap spatial action policies with minimal robot data. I will release open model weights, tokenizers, and training code to enable broad community adoption.
 
-  \item \textbf{Grounded Cooperative Dialogue} [\textit{Capabilities, Platforms}]: Unlike chat-based AI assistants, assistive AI agents need to communicate reliably with users about actions, objects, and goals that are \textit{grounded} in an external environment (e.g.\ web apps, video games, or the physical world). In this line of work, I aim to build upon the Bayesian instruction following paradigm in CLIPS [AAMAS'24a], developing AI agents that can ask targeted questions, describe the goals they are pursuing, and provide information that users may not be aware of. To achieve this, I plan to develop extensions of probabilistic programming systems for constrained generation from LLMs with my collaborators at MIT, enabling uncertainty-aware semantic parsing and goal-oriented language production at scale.
+  \item \textbf{3D Spatial Perception for Robotics} [\textit{Capabilities, Foundations}]: Reliable robot action depends on reliable 3D perception. This project will extend WildDet3D [WildDet3D] toward a general open-vocabulary monocular 3D detection and scene reconstruction system suited to robot manipulation settings. I will develop geometry-aware architectures unifying text, point, and box prompts, and curate the next generation of large-scale 3D detection datasets to train and evaluate these systems.
 
-  \item \textbf{WebAssistant / Web Agent Planning Language} [\textit{Platforms, Applications}]: Current LLM-based web-browsing agents suffer from reliability and safety issues due to their lack of coherent world models and sound planning abilities. As an alternative approach to building AI web agents that is reliable-by-design, this project will develop the Web Agent Planning Language (WAPL), a domain-specific language for modeling web environments at the level of resolution needed for planning and inverse planning, taking inspiration from my prior work on PDDL.jl [SM Thesis]. WAPL will in turn enable the development of WebAssistant, a model-based, language-instructable AI web agent.
-
-  \item \textbf{CoPlayers / Smart Cooperative NPCs} [\textit{Platforms, Applications}]: While video-games have long made use of AI planning techniques like Goal-Oriented Action Planning, cooperative planning between non-player characters (NPCs) and human players has been limited due to the absence of fast inverse planning technology. This project will bring SIPS-based inverse planning [NeurIPS'20] and grounded cooperative dialogue to video games via a game engine library for AI coplayers, while addressing the scaling challenges involved in real-time cooperative gameplay.
+  \item \textbf{Language-Grounded Spatial Affordance Learning} [\textit{Capabilities, Foundations}]: Extending RoboPoint [RoboPoint] and PointArena [PointArena], this project will develop models that predict richer affordance representations---including contact points, force directions, trajectory waypoints, and free-space paths---from natural language instructions. I will systematically study the relationship between pointing-based affordance interfaces and downstream task success, developing the theory of spatial affordance grounding.
 \end{itemize}
 
-\subsubsection*{Objective 2: AI agents that cooperate in teams, institutions, and societies}
-
-Work on this objective will center around efficient multi-agent modeling, and the advancement of cooperative capabilities required for agents to interact with structured social environments:
+\subsubsection*{Objective 2: Robust, Failure-Aware, and Long-Horizon Embodied AI}
 
 \begin{itemize}
-  \item \textbf{Multi-Resolution Multi-Agent Bayesian Modeling} [\textit{Capabilities, Platforms}]: Recent progress in multi-agent interaction has been driven by highly efficient simulators for multi-agent RL, which generate large amounts of synthetic data to train model-free policies. However, model-based cooperative agents require a different approach: Approximate but robust and efficient models of multi-agent behavior suitable for online Bayesian inference and planning. This project seeks to develop a multi-resolution multi-agent Bayesian modeling framework (MMBayes) that meets these needs, drawing upon ideas from SIPS [NeurIPS'20] and coarse-to-fine methods in probabilistic programming. MMBayes will enable the development of autonomous systems (e.g.\ AVs, robots) that can rapidly and fluidly coordinate with large numbers of agents, modeling users and teammates at a high resolution while maintaining coarser-grained representations of less important agents (e.g.\ agents in crowds).
+  \item \textbf{Failure Detection, Diagnosis, and Recovery} [\textit{Capabilities, Applications}]: AHA [AHA] and FailSafe [FailSafe] established that VLMs can detect and reason about manipulation failures. This project will close the full failure-recovery loop: online detection of failure states, generation of verbal diagnoses and corrective plans, and execution of recovery actions. I will develop a unified architecture that integrates failure reasoning with the ARM framework, so that spatial representations serve not only forward prediction but also failure attribution.
 
-  \item \textbf{Norm Learning, Reasoning and Institutional Modeling} [\textit{Capabilities, Foundations}]: For AI agents to integrate well within teams, institutions, and society at large, they have to understand the normative and institutional structure of their social environments. However, most prior work on social cognition in AI has focused on modeling the mental states of agents, not the norms they collectively practice, or their social and institutional roles. To address this gap, this project will develop new theories, models, and algorithms for norm learning, reasoning and institutional modeling, building upon my work on Bayesian norm learning in Markov games [AAMAS'24b], game theoretic accounts of institutions and norms, and the cognitive science of institutional representations. These models will be integrated into the MMBayes framework to enable richer multi-agent reasoning.
+  \item \textbf{Memory-Augmented Embodied AI for Long-Horizon Tasks} [\textit{Capabilities, Platforms}]: SAM2Act [SAM2Act] demonstrated that integrating visual foundation models with explicit memory enables success on long-horizon manipulation tasks. This project will generalize this finding, developing a memory architecture that maintains spatial state estimates across extended task horizons, integrates new observations via differentiable attention over spatially indexed memory, and supports symbolic sub-task planning over the memory state.
+
+  \item \textbf{Sim-to-Real Transfer via Spatial Invariances} [\textit{Capabilities, Foundations}]: A core bottleneck to real-world robot deployment is the sim-to-real gap. This project will study which spatial representations---depth maps, surface normals, optical flow, object-centric features---are most invariant across the simulation-to-real boundary, developing training objectives that explicitly encourage spatial representations to be domain-agnostic. This work will leverage the diverse perturbations of THE COLOSSEUM benchmark [COLOSSEUM] as a testbed.
 \end{itemize}
 
-\subsubsection*{Objective 3: Infrastructure for human and AI cooperation}
-
-To foster fair and mutually-beneficial arrangements between humans and between AI agents, work on this objective will advance the fundamental theory and science of how humans negotiate and form agreements with each other, and apply this theory to design AI systems that embody and facilitate such interactions:
+\subsubsection*{Objective 3: Open Ecosystems, Benchmarks, and Data for Embodied AI}
 
 \begin{itemize}
-  \item \textbf{Computational Models of Rational Deliberation and Negotiation} [\textit{Foundations, Capabilities}]: For AI systems to be aligned with human normative principles, they have to understand how and why people come to endorse certain principles, and whether those principles are reasonably agreed upon by relevant stakeholders [PhilStudies'24]. To design AI systems capable of replicating and augmenting such processes, I aim to develop computational models that capture the rich structure of human deliberation and normative reasoning. This project will build upon work by myself and collaborators on resource-rational moral cognition, integrating such work with ideas from computational argumentation frameworks, game theory, and social choice.
+  \item \textbf{MolmoSpaces: Open Ecosystem for Navigation and Manipulation} [\textit{Platforms, Applications}]: MolmoSpaces [MolmoSpaces] establishes a large-scale open ecosystem for training and evaluating embodied agents across navigation and manipulation tasks. At NUS, I will extend this ecosystem to cover Southeast Asian indoor environments (offices, healthcare facilities, smart homes), releasing environment assets, task suites, and evaluation protocols that reflect the diversity of real deployment contexts.
 
-  \item \textbf{AI-augmented Argumentation and Group Deliberation} [\textit{Capabilities, Applications}]: As a demonstration and testbed for the computational frameworks described above, I aim to develop AI systems that facilitates group deliberation via argument analysis, summarization, and consensus generation. A specific use case is scientific peer review, where reviewers present arguments for and against the merit of particular paper, and a meta-reviewer facilitates discussion before producing a final judgment. Developing a system to produce such meta-reviews (AutoMeta) will provide a practically useful tool, while enabling the computational study of real-world human deliberation.
+  \item \textbf{Automated Robot Data Collection without Teleoperation} [\textit{Platforms, Foundations}]: AR2-D2 [AR2-D2] and Manipulate-Anything [Manipulate-Anything] demonstrated that robots can be trained from scripted demonstrations and VLM-guided autonomous interaction, removing the human-in-the-loop bottleneck. I will scale these paradigms, developing a fully automated data flywheel: the robot proposes tasks, attempts them, collects diverse demonstrations via language-guided policy search, and automatically curates successful trajectories for training.
+
+  \item \textbf{Embodied Spatial Intelligence Benchmarks} [\textit{Foundations, Platforms}]: SAT [SAT] and PointArena [PointArena] measure spatial reasoning in multimodal LLMs. THE COLOSSEUM [COLOSSEUM] measures manipulation generalization. I will develop the next generation of embodied evaluation suites that test the full stack: from visual grounding and 3D perception to action planning and failure recovery, providing the community with rigorous, standardized metrics for tracking progress in embodied spatial intelligence.
 \end{itemize}
 
 \section{Milestones \& Deliverables}
 
-Through this research program, I aim to deliver several software prototypes and research platforms that demonstrate the practical and theoretical benefits of model-based cooperative intelligence:
+Through this research program, I aim to deliver open-source systems and research platforms that demonstrate and enable embodied spatial intelligence:
 
 \begin{itemize}
-  \item \textbf{WebAssistant}: A model-based AI web agent built on CLIPS and the Web Agent Planning Language.
-  \item \textbf{CoPlayer}: A library for language-instructable smart NPCs in cooperative video games.
-  \item \textbf{MMBayes}: A multi-resolution Bayesian modeling framework for multi-agent societies.
-  \item \textbf{AutoMeta}: A meta-reviewing AI system to facilitate peer review and group deliberation.
+  \item \textbf{MolmoAct3}: A next-generation open vision-language-action model for bimanual and mobile manipulation, with open weights and training code.
+  \item \textbf{WildDet3D v2}: A general open-vocabulary 3D perception system for robot manipulation environments.
+  \item \textbf{FailureRecovery}: An end-to-end failure detection, diagnosis, and recovery framework integrated into the ARM pipeline.
+  \item \textbf{MolmoSpaces-SEA}: An extended open ecosystem covering Southeast Asian indoor environments.
+  \item \textbf{EmbodiedEval}: A comprehensive benchmark suite for embodied spatial intelligence, covering grounding, perception, planning, and recovery.
 \end{itemize}
 
-Below is a proposed research timeline, including intermediate milestones such as papers and tech demos:
+Below is a proposed research timeline, including intermediate milestones such as papers and system releases:
 
 \vspace{1em}
 \begin{tabular}{@{}lp{11cm}@{}}
@@ -118,43 +117,45 @@ Below is a proposed research timeline, including intermediate milestones such as
 \midrule
 Y1 &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item Recruitment of initial team of RAs / PhD students / post-docs with relevant skill sets
-  \item Initial design and prototype of Web Agent Planning Language (WAPL)
-  \item Establish partnership with game developers to create CoPlayer prototype
-  \item Paper on domain-general open-ended Bayesian goal inference
-  \item Paper on foundations and theory of norm-augmented Markov games
+  \item Recruitment of initial team of RAs / PhD students / post-docs
+  \item Paper on scaling ARMs to bimanual manipulation (MolmoAct3 prototype)
+  \item Release of WildDet3D v2 with expanded categories and robot-scene training data
+  \item Paper on memory-augmented long-horizon manipulation (extending SAM2Act)
 \end{itemize} \\
 Y1.5 &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item Paper on grounded cooperative dialogue in language-augmented assistance games
-  \item Paper on efficient belief-space assistive planning
+  \item Open release of MolmoAct3 weights and training code
+  \item Paper on language-grounded affordance prediction beyond pointing
+  \item Launch of EmbodiedEval benchmark suite
 \end{itemize} \\
 Y2 &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item Open-source WebAssistant + WAPL implementation as a web browser extension + paper
-  \item Initial theory and experiments on rational argumentation modeling
+  \item Paper on unified failure detection, diagnosis, and recovery (FailureRecovery system)
+  \item Initial release of automated data collection pipeline (AR2-D2 v2)
+  \item Establish collaboration with Singapore healthcare / manufacturing partners for real-world deployment
 \end{itemize} \\
 Y2.5 &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item Initial release and game demo of CoPlayer technology + paper
-  \item Paper on multi-resolution multi-agent Bayesian modeling / MMBayes prototype
-  \item Establish collaborations for applications of MMBayes
+  \item MolmoSpaces-SEA first release with indoor navigation and manipulation tasks
+  \item Paper on sim-to-real transfer via spatial invariances with COLOSSEUM testbed
+  \item Paper on 3D spatial perception with domain-agnostic representations
 \end{itemize} \\
 Y3 &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item Mature release of CoPlayer library
-  \item Version 1.0 of MMBayes, with collaborator-sourced use cases (e.g.\ self-driving, etc.)
-  \item Extending WebAssistant capabilities via automated WAPL modeling, etc.
+  \item Mature release of MolmoAct3 with mobile manipulation support
+  \item Automated data flywheel producing 1M+ robot trajectories open-sourced
+  \item EmbodiedEval v2.0 with mobile manipulation and long-horizon evaluation tracks
 \end{itemize} \\
 Y3.5 &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item AutoMeta open-source prototype on real-world deliberation + peer review data
-  \item Theory paper on reason-based deliberation, negotiation, and norm-governed cooperation
+  \item Full MolmoSpaces-SEA release with collaborator-contributed environments
+  \item FailureRecovery system deployed in real-world NUS and partner robot systems
+  \item Theory paper on spatial representations as the unifying intermediate for embodied AI
 \end{itemize} \\
 Y4+ &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item Further extensions of existing software and modeling frameworks
-  \item Further work towards a unified theory of human-like cooperative intelligence
+  \item Toward a general-purpose open embodied foundation model deployable on consumer hardware
+  \item Unified theory of spatial intelligence connecting perception, reasoning, planning, and action
 \end{itemize} \\
 \bottomrule
 \end{tabular}
@@ -162,93 +163,63 @@ Y4+ &
 \section*{Key Papers \& References}
 
 \begin{description}
-  \item[\textbf{[NeurIPS'20]}] T.~Zhi-Xuan, J.~Mann, T.~Silver, J.~Tenenbaum, and V.~Mansinghka, \textbf{``Online Bayesian Goal Inference for Boundedly Rational Planning Agents,''} \textit{Advances in Neural Information Processing Systems}, vol.~33, 2020.
+  \item[\textbf{[MolmoAct]}] J.~Lee*, J.~Duan*, H.~Fang*, Y.~Deng, S.~Liu, B.~Li, B.~Fang, J.~Zhang, Y.~R.~Wang, S.~Lee, W.~Han, W.~Pumacay, A.~Wu, R.~Hendrix, K.~Farley, E.~VanderBilt, A.~Farhadi, D.~Fox, and R.~Krishna, \textbf{``MolmoAct: Action Reasoning Models that Can Reason in Space,''} \textit{IEEE International Conference on Robotics and Automation (ICRA)}, 2026.
 
-  \item[\textbf{[CogSci'21]}] A.~Alanqary*, G.~Z.~Lin*, J.~Le*, T.~Zhi-Xuan*, V.~K.~Mansinghka, and J.~B.~Tenenbaum, \textbf{``Modeling the Mistakes of Boundedly Rational Agents within a Bayesian Theory of Mind,''} in \textit{Proceedings of the Annual Meeting of the Cognitive Science Society}, vol.~43, 2021.
+  \item[\textbf{[MolmoAct2]}] H.~Fang*, J.~Duan*, D.~Clay, S.~Wang, S.~Liu, W.~Huang, X.~Fan, W.-C.~Tsai, S.~Chen, Y.~R.~Wang, et~al., \textbf{``MolmoAct2: Action Reasoning Models for Real-World Deployment,''} \textit{arXiv preprint arXiv:2605.02881}, 2026.
 
-  \item[\textbf{[CogSci'24a]}] T.~Zhi-Xuan, G.~Kang, V.~Mansinghka, and J.~Tenenbaum, \textbf{``Infinite Ends from Finite Samples: Open-Ended Goal Inference as Top-Down Bayesian Filtering of Bottom-up Proposals,''} in \textit{Proceedings of the Annual Meeting of the Cognitive Science Society}, vol.~46, 2024.
+  \item[\textbf{[MolmoSpaces]}] J.~Duan et~al., \textbf{``MolmoSpaces: Large-Scale Open Ecosystem for Robot Navigation and Manipulation,''} \textit{Robotics: Science and Systems (RSS)}, 2026. \textbf{Oral}.
 
-  \item[\textbf{[AAMAS'24a]}] T.~Zhi-Xuan*, L.~Ying*, V.~Mansinghka, and J.~B.~Tenenbaum, \textbf{``Pragmatic Instruction Following and Goal Assistance via Cooperative Language-Guided Inverse Planning,''} in \textit{Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems}, 2024.
+  \item[\textbf{[AHA]}] J.~Duan, \textbf{``AHA: A Vision-Language-Model for Detecting and Reasoning over Failures in Robotic Manipulation,''} \textit{International Conference on Learning Representations (ICLR)}, 2025.
 
-  \item[\textbf{[SM Thesis]}] T.~Zhi-Xuan, \textbf{PDDL.jl: An Extensible Interpreter and Compiler Interface for Fast and Flexible AI Planning.} SM Thesis, Massachusetts Institute of Technology, 2022.
+  \item[\textbf{[FailSafe]}] Z.~Lin, J.~Duan, H.~Fang, D.~Fox, R.~Krishna, C.~Tan, and B.~Wen, \textbf{``FailSafe: Reasoning and Recovery from Failures in Vision-Language-Action Models,''} \textit{IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 2026.
 
-  \item[\textbf{[AISTATS'23]}] A.~K.~Lew, G.~Matheos, T.~Zhi-Xuan, M.~Ghavamizadeh, N.~Gothoskar, S.~Russell, and V.~K.~Mansinghka, \textbf{``SMCP3: Sequential Monte Carlo with probabilistic program proposals,''} in \textit{Proceedings of the International Conference on Artificial Intelligence and Statistics}, 2023.
+  \item[\textbf{[SAM2Act]}] H.~Fang, M.~Grotz, W.~Pumacay, Y.~R.~Wang, D.~Fox, R.~Krishna, and J.~Duan, \textbf{``SAM2Act: Integrating Visual Foundation Model with a Memory Architecture for Robotic Manipulation,''} \textit{International Conference on Machine Learning (ICML)}, 2025. \textbf{Best Paper, RemembeRL @ CoRL 2025}.
 
-  \item[\textbf{[CogSci'24b]}] L.~Ying*, T.~Zhi-Xuan*, L.~Wong, V.~Mansinghka, and J.~Tenenbaum, \textbf{``Grounding Language about Belief in a Bayesian Theory-of-Mind,''} in \textit{Proceedings of the Annual Meeting of the Cognitive Science Society}, vol.~46, 2024.
+  \item[\textbf{[COLOSSEUM]}] W.~Pumacay*, I.~Singh*, J.~Duan*, R.~Krishna, J.~Thomason, and D.~Fox, \textbf{``THE COLOSSEUM: A Benchmark for Evaluating Generalization for Robotic Manipulation,''} \textit{Robotics: Science and Systems (RSS)}, 2024. \textbf{Oral}.
 
-  \item[\textbf{[TACL'25]}] L.~Ying*, T.~Zhi-Xuan*, L.~Wong, V.~Mansinghka, and J.~Tenenbaum, \textbf{``Understanding Epistemic Language with a Language-augmented Bayesian Theory-of-Mind,''} in \textit{Transactions of the Association for Computational Linguistics}, 2025.
+  \item[\textbf{[Manipulate-Anything]}] J.~Duan, W.~Yuan, W.~Pumacay, Y.~R.~Wang, K.~Ehsani, D.~Fox, and R.~Krishna, \textbf{``Manipulate-Anything: Automating Real-World Robots using Vision-Language Models,''} \textit{Conference on Robot Learning (CoRL)}, 2024.
 
-  \item[\textbf{[AAMAS'24b]}] N.~Oldenburg and T.~Zhi-Xuan, \textbf{``Learning and Sustaining Shared Normative Systems via Bayesian Rule Induction in Markov Games,''} in \textit{Proceedings of the 23rd Int'l Conference on Autonomous Agents and Multiagent Systems}, 2024.
+  \item[\textbf{[AR2-D2]}] J.~Duan, Y.~R.~Wang, M.~Shridhar, D.~Fox, and R.~Krishna, \textbf{``AR2-D2: Training a Robot Without a Robot,''} \textit{Conference on Robot Learning (CoRL)}, 2023.
 
-  \item[\textbf{[PhilStudies'24]}] T.~Zhi-Xuan, M.~Carroll, M.~Franklin, and H.~Ashton, \textbf{``Beyond Preferences in AI Alignment,''} \textit{Philosophical Studies}, 2024.
+  \item[\textbf{[RoboPoint]}] W.~Yuan*, J.~Duan*, V.~Blukis, W.~Pumacay, R.~Krishna, A.~Murali, A.~Mousavian, and D.~Fox, \textbf{``RoboPoint: A Vision-Language Model for Spatial Affordance Prediction for Robotics,''} \textit{arXiv preprint arXiv:2406.10721}, 2024.
+
+  \item[\textbf{[WildDet3D]}] W.~Huang, J.~Zhang, S.~Li, T.~Jia, J.~Duan, Y.~Cheng, J.~Cho, M.~Wallingford, R.~Soraki, C.~D.~Kim, et~al., \textbf{``WildDet3D: Scaling Promptable 3D Detection in the Wild,''} \textit{arXiv preprint arXiv:2604.08626}, 2026.
+
+  \item[\textbf{[SAT]}] A.~Ray, J.~Duan, R.~Tan, D.~Bashkirova, R.~Hendrix, K.~Ehsani, A.~Kembhavi, B.~A.~Plummer, R.~Krishna, K.-H.~Zeng, et~al., \textbf{``SAT: Spatial Aptitude Training for Multimodal Language Models,''} \textit{arXiv preprint arXiv:2412}, 2024.
+
+  \item[\textbf{[PointArena]}] L.~Cheng*, J.~Duan*, Y.~R.~Wang, H.~Fang, B.~Li, Y.~Huang, E.~Wang, A.~Eftekhar, J.~Lee, W.~Yuan, et~al., \textbf{``PointArena: Probing Multimodal Grounding through Language-Guided Pointing,''} \textit{arXiv preprint arXiv:2505.09990}, 2025.
 \end{description}
 
 \section*{Other References}
 
 \begin{enumerate}
-  \item S.~Kambhampati, K.~Valmeekam, L.~Guan, M.~Verma, K.~Stechly, S.~Bhambri, L.~P.~Saldyt, and A.~B.~Murthy, ``LLMs can't plan, but can help planning in LLM-modulo frameworks,'' in \textit{Forty-First International Conference on Machine Learning}, 2024.
+  \item Y.~LeCun, ``A path towards autonomous machine intelligence,'' \textit{Open Review preprint}, 2022.
 
-  \item H.~Kim, M.~Sclar, T.~Zhi-Xuan, L.~Ying, S.~Levine, Y.~Liu, J.~B.~Tenenbaum, and Y.~Choi, ``Hypothesis-driven theory-of-mind reasoning for large language models,'' \textit{arXiv preprint arXiv:2502.11881}, 2025.
+  \item T.~Z.~Zhao, V.~Kumar, S.~Levine, and C.~Finn, ``Learning fine-grained bimanual manipulation with low-cost hardware,'' in \textit{Robotics: Science and Systems}, 2023.
 
-  \item D.~Malik, M.~Palaniappan, J.~Fisac, D.~Hadfield-Menell, S.~Russell, and A.~Dragan, ``An efficient, generalized Bellman update for cooperative inverse reinforcement learning,'' in \textit{International Conference on Machine Learning}, pp.~3394--3402, PMLR, 2018.
+  \item A.~Brohan, N.~Brown, J.~Carbajal, Y.~Chebotar, X.~Chen, K.~Choromanski, T.~Ding, D.~Driess, A.~Dubowsky, C.~Finn, et al., ``RT-2: Vision-language-action models transfer web knowledge to robotic control,'' in \textit{Conference on Robot Learning}, 2023.
 
-  \item S.~Levine, N.~Chater, J.~B.~Tenenbaum, and F.~Cushman, ``Resource-rational contractualism: A triple theory of moral cognition,'' \textit{Behavioral and Brain Sciences}, pp.~1--38, 2024.
+  \item K.~Black, N.~Brown, D.~Driess, A.~Esmail, M.~Equi, C.~Finn, N.~Fusai, L.~Groom, K.~Hausman, B.~Ichter, et al., ``$\pi_0$: A vision-language-action flow model for general robot control,'' \textit{arXiv preprint arXiv:2410.24164}, 2024.
 
-  \item L.~Amgoud and C.~Cayrol, ``A reasoning model based on the production of acceptable arguments,'' \textit{Annals of Mathematics and Artificial Intelligence}, vol.~34, pp.~197--215, 2002.
+  \item NVIDIA, ``GR00T N1.5: An open foundation model for generalist humanoid robots,'' \textit{arXiv preprint}, 2025.
 
-  \item I.~Rahwan, S.~D.~Ramchurn, N.~R.~Jennings, P.~McBurney, S.~Parsons, and L.~Sonenberg, ``Argumentation-based negotiation,'' \textit{The Knowledge Engineering Review}, vol.~18, no.~4, pp.~343--375, 2003.
+  \item C.~Chi, Z.~Xu, S.~Feng, E.~Cousineau, Y.~Du, B.~Burchfiel, R.~Tedrake, and S.~Song, ``Diffusion policy: Visuomotor policy learning via action diffusion,'' \textit{International Journal of Robotics Research}, 2023.
 
-  \item A.~Dafoe, Y.~Bachrach, G.~Hadfield, E.~Horvitz, K.~Larson, and T.~Graepel, ``Cooperative AI: Machines must learn to find common ground,'' \textit{Nature}, vol.~593, no.~7857, pp.~33--36, 2021.
+  \item A.~Shridhar, L.~Manuelli, and D.~Fox, ``Perceiver-actor: A multi-task transformer for robotic manipulation,'' in \textit{Conference on Robot Learning}, 2022.
 
-  \item K.~M.~Collins, I.~Sucholutsky, U.~Bhatt, K.~Chandra, L.~Wong, M.~Lee, C.~E.~Zhang, T.~Zhi-Xuan, M.~Ho, V.~Mansinghka, et al., ``Building machines that learn and think with people,'' \textit{Nature Human Behaviour}, vol.~8, no.~10, pp.~1851--1863, 2024.
-
-  \item A.~Jaech, A.~Kalai, A.~Lerer, A.~Richardson, A.~El-Kishky, A.~Low, A.~Helyar, A.~Madry, A.~Beutel, A.~Carney, et al., ``OpenAI o1 system card,'' \textit{arXiv preprint arXiv:2412.16720}, 2024.
+  \item J.~Gu, S.~Kirmani, P.~Wohlhart, Y.~Lu, M.~G.~Arenas, K.~Rao, W.~Yu, C.~Fu, K.~Gopalakrishnan, Z.~Xu, et al., ``RT-Trajectory: Robotic task generalization via hindsight trajectory templates,'' in \textit{International Conference on Learning Representations}, 2024.
 
   \item S.~Zhou, F.~F.~Xu, H.~Zhu, X.~Zhou, R.~Lo, A.~Sridhar, X.~Cheng, T.~Ou, Y.~Bisk, D.~Fried, U.~Alon, and G.~Neubig, ``WebArena: A realistic web environment for building autonomous agents,'' in \textit{The Twelfth International Conference on Learning Representations}, 2024.
 
-  \item I.~Levy, B.~Wiesel, S.~Marreed, A.~Oved, A.~Yaeli, and S.~Shlomov, ``ST-WebAgentBench: A benchmark for evaluating safety and trustworthiness in web agents,'' \textit{arXiv preprint arXiv:2410.06703}, 2024.
+  \item M.~Shridhar, J.~Thomason, D.~Gordon, Y.~Bisk, W.~Han, R.~Mottaghi, L.~Zettlemoyer, and D.~Fox, ``ALFRED: A benchmark for interpreting grounded instructions for everyday tasks,'' in \textit{IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2020.
 
-  \item H.~Kim, M.~Sclar, X.~Zhou, R.~Bras, G.~Kim, Y.~Choi, and M.~Sap, ``FANToM: A benchmark for stress-testing machine theory of mind in interactions,'' in \textit{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing}, pp.~14397--14413, 2023.
+  \item K.~Ehsani, W.~Han, A.~Herrasti, E.~VanderBilt, L.~Weihs, E.~Kolve, A.~Farhadi, J.~Salvador, R.~Mottaghi, and A.~Kembhavi, ``ManipulaTHOR: A framework for visual object manipulation,'' in \textit{IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2021.
 
-  \item S.~J.~Russell and P.~Norvig, \textit{Artificial Intelligence: A Modern Approach}. USA: Prentice-Hall, Inc., 1995.
+  \item Y.~Du, K.~Yang, P.~A.~Paull, J.~B.~Tenenbaum, and J.~Andreas, ``Learning universal policies via text-guided video generation,'' in \textit{Advances in Neural Information Processing Systems}, 2023.
 
-  \item S.~J.~Russell, ``Rationality and intelligence,'' \textit{Artificial Intelligence}, vol.~94, no.~1--2, pp.~57--77, 1997.
+  \item A.~Kirillov, E.~Mintun, N.~Ravi, H.~Mao, C.~Rolland, L.~Gustafson, T.~Xiao, S.~Whitehead, A.~C.~Berg, W.-Y.~Lo, P.~Dollár, and R.~Girshick, ``Segment anything,'' in \textit{IEEE/CVF International Conference on Computer Vision}, 2023.
 
-  \item S.~Omohundro, ``Rational artificial intelligence for the greater good,'' in \textit{Singularity Hypotheses: A Scientific and Philosophical Assessment}, pp.~161--179, Springer, 2013.
-
-  \item C.~Baker, R.~Saxe, and J.~Tenenbaum, ``Bayesian theory of mind: Modeling joint belief-desire attribution,'' in \textit{Proceedings of the Annual Meeting of the Cognitive Science Society}, 33 (33), 2011.
-
-  \item D.~Hadfield-Menell, S.~J.~Russell, P.~Abbeel, and A.~Dragan, ``Cooperative inverse reinforcement learning,'' in \textit{Advances in Neural Information Processing Systems}, pp.~3909--3917, 2016.
-
-  \item O.~Macindoe, L.~P.~Kaelbling, and T.~Lozano-P\'{e}rez, ``Pomcop: Belief space planning for sidekicks in cooperative games,'' in \textit{AIIDE}, 2012.
-
-  \item S.~A.~Wu, R.~E.~Wang, J.~A.~Evans, J.~B.~Tenenbaum, D.~C.~Parkes, and M.~Kleiman-Weiner, ``Too many cooks: Bayesian inference for coordinating multi-agent collaboration,'' \textit{Topics in Cognitive Science}, vol.~13, no.~2, pp.~414--432, 2021.
-
-  \item F.~A.~Saad, M.~C.~Rinard, and V.~K.~Mansinghka, ``SPPL: Probabilistic programming with fast exact symbolic inference,'' in \textit{Proceedings of the 42nd ACM SIGPLAN International Conference on Programming Language Design and Implementation}, pp.~804--819, 2021.
-
-  \item F.~Zaiser, A.~Murawski, and C.-H.~L.~Ong, ``Exact Bayesian inference on discrete models via probability generating functions: A probabilistic programming approach,'' \textit{Advances in Neural Information Processing Systems}, vol.~36, pp.~2427--2462, 2023.
-
-  \item A.~K.~Lew, T.~Zhi-Xuan, G.~Grand, and V.~K.~Mansinghka, ``Sequential Monte Carlo steering of large language models using probabilistic programs,'' \textit{arXiv preprint arXiv:2306.03081}, 2023.
-
-  \item J.~Loula, B.~LeBrun, L.~Du, B.~Lipkin, C.~Pasti, G.~Grand, T.~Liu, Y.~Emara, M.~Freedman, J.~Eisner, R.~Cotterell, V.~Mansinghka, A.~K.~Lew, T.~Vieira, and T.~J.~O'Donnell, ``Syntactic and Semantic Control of Large Language Models via Sequential Monte Carlo,'' in \textit{The Thirteenth International Conference on Learning Representations}, 2025.
-
-  \item K.~Vafa, J.~Chen, A.~Rambachan, J.~Kleinberg, and S.~Mullainathan, ``Evaluating the world model implicit in a generative model,'' \textit{Advances in Neural Information Processing Systems}, vol.~37, pp.~26941--26975, 2024.
-
-  \item J.~Orkin, ``Agent architecture considerations for real-time planning in games,'' in \textit{Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment}, vol.~1, pp.~105--110, 2005.
-
-  \item M.~Cusumano-Towner, B.~Bichsel, T.~Gehr, M.~Vechev, and V.~K.~Mansinghka, ``Incremental inference for probabilistic programs,'' in \textit{Proceedings of the 39th ACM SIGPLAN Conference on Programming Language Design and Implementation}, pp.~571--585, 2018.
-
-  \item G.~K.~Hadfield and B.~R.~Weingast, ``What is law? A coordination model of the characteristics of legal order,'' \textit{Journal of Legal Analysis}, vol.~4, no.~2, pp.~471--514, 2012.
-
-  \item H.~Gintis, ``Social norms as choreography,'' \textit{Politics, Philosophy \& Economics}, vol.~9, no.~3, pp.~251--264, 2010.
-
-  \item J.~Jara-Ettinger and Y.~Dunham, ``The institutional stance,'' \textit{Under review}, 2024.
-
-  \item D.~Trujillo, M.~Zhang, T.~Zhi-Xuan, J.~B.~Tenenbaum, and S.~Levine, ``Resource-rational virtual bargaining for moral judgment: Toward a probabilistic cognitive model,'' \textit{Topics in Cognitive Science}, 2024.
-
-  \item K.~Binmore, \textit{Natural Justice}. Oxford University Press, 2005.
-
-  \item S.~Fish, P.~Golz, D.~C.~Parkes, A.~D.~Procaccia, G.~Rusak, I.~Shapira, and M.~W\"{u}thrich, ``Generative social choice,'' \textit{arXiv preprint arXiv:2309.01291}, 2023.
+  \item R.~Krishna, Y.~Zhu, O.~Groth, J.~Johnson, K.~Hata, J.~Kravitz, S.~Chen, Y.~Kalantidis, L.-J.~Li, D.~A.~Shamma, M.~S.~Bernstein, and L.~Fei-Fei, ``Visual genome: Connecting language and vision using crowdsourced dense image annotations,'' \textit{International Journal of Computer Vision}, vol.~123, pp.~32--73, 2017.
 \end{enumerate}
 
 \end{document}
