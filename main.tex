@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{parskip}
+\usepackage{natbib}
 
 \title{\textbf{Spatial Intelligence for Embodied AI:\\
 Foundation Models that Perceive, Reason, and Act}\\[0.5em]
@@ -30,7 +31,7 @@ Foundation Models that Perceive, Reason, and Act}\\[0.5em]
 
 The central challenge of embodied AI is teaching machines to act reliably in the physical world. Despite remarkable advances in vision and language understanding, modern robots still fail at tasks that a child finds trivial. The root cause is not a lack of data or compute, but a fundamental absence of \textit{spatial intelligence}: the ability to ground language in space, infer geometry and physical dynamics, and use these representations as explicit intermediates for planning and control. Current vision-language-action (VLA) models bypass this by mapping raw pixels and language tokens directly to low-level motor commands---an end-to-end shortcut that trades interpretability and sample efficiency for brittle, environment-specific policies that collapse under distribution shift.
 
-My research corrects this by making spatial reasoning an \textit{explicit, steerable, and data-efficient} stage of embodied decision-making. This program spans a coherent arc: from language-conditioned 2D spatial grounding [RoboPoint, PointArena], through dynamic 3D spatial reasoning benchmarks and open-vocabulary 3D perception [SAT, WildDet3D], to open vision-language-action models that decompose embodied action into depth-aware perception, mid-level spatial plans, and low-level control [MolmoAct, MolmoAct2]. The resulting models achieve \textbf{70.5\% zero-shot} performance on SimplerEnv Visual Matching, surpassing closed-source $\pi_0$ and GR00T N1.5, with +23.3\% OOD generalization improvement. MolmoAct2 has been independently replicated and deployed in kitchen, café, and wetlab settings, including by the Stanford CRISPR Lab, and our models and datasets have surpassed 300K+ HuggingFace downloads.
+My research corrects this by making spatial reasoning an \textit{explicit, steerable, and data-efficient} stage of embodied decision-making. This program spans a coherent arc: from language-conditioned 2D spatial grounding \citep{robopoint, pointarena}, through dynamic 3D spatial reasoning benchmarks and open-vocabulary 3D perception \citep{sat, wilddet3d}, to open vision-language-action models that decompose embodied action into depth-aware perception, mid-level spatial plans, and low-level control \citep{molmoact, molmoact2}. The resulting models achieve \textbf{70.5\% zero-shot} performance on SimplerEnv Visual Matching, surpassing closed-source $\pi_0$ \citep{pi0} and GR00T N1.5, with +23.3\% OOD generalization improvement. MolmoAct2 \citep{molmoact2} has been independently replicated and deployed in kitchen, café, and wetlab settings, including by the Stanford CRISPR Lab, and our models and datasets have surpassed 300K+ HuggingFace downloads.
 
 This proposal outlines a research program at NUS to scale embodied spatial intelligence across three interconnected levels: \textbf{(i)} Embodied foundation models that reason in space before acting; \textbf{(ii)} Robust, failure-aware, and long-horizon embodied AI capable of real-world deployment; \textbf{(iii)} Open ecosystems, large-scale benchmarks, and automated data pipelines that accelerate the field. Together, these thrusts will enable robots that truly perceive, reason, and act---making embodied AI deployable far beyond controlled lab environments.
 
@@ -40,25 +41,25 @@ This research program advances a unified framework for spatially intelligent emb
 
 \subsubsection*{Embodied Foundation Models that Reason in Space}
 
-\textbf{Objective 1: Embodied Foundation Models that Reason in Space.} Current VLA models treat robot control as a black-box input-output mapping, leaving spatial structure implicit and unverifiable. This objective develops \textit{Action Reasoning Models} (ARMs) that decompose embodied action into three explicit stages: (1) depth-aware perception tokens encoding a 2.5D scene representation; (2) mid-level spatial plans expressed as editable image-space trajectories; and (3) low-level actions conditioned on both. This decomposition makes spatial reasoning transparent, steerable by human operators, and far more data-efficient than end-to-end alternatives. I will scale this paradigm to bimanual manipulation, mobile manipulation, and long-horizon multi-step tasks, advancing the MolmoAct series [MolmoAct, MolmoAct2] toward a general-purpose open robotics foundation model deployable on consumer hardware.
+\textbf{Objective 1: Embodied Foundation Models that Reason in Space.} Current VLA models treat robot control as a black-box input-output mapping, leaving spatial structure implicit and unverifiable. This objective develops \textit{Action Reasoning Models} (ARMs) that decompose embodied action into three explicit stages: (1) depth-aware perception tokens encoding a 2.5D scene representation; (2) mid-level spatial plans expressed as editable image-space trajectories; and (3) low-level actions conditioned on both. This decomposition makes spatial reasoning transparent, steerable by human operators, and far more data-efficient than end-to-end alternatives. I will scale this paradigm to bimanual manipulation, mobile manipulation, and long-horizon multi-step tasks, advancing the MolmoAct series \citep{molmoact, molmoact2} toward a general-purpose open robotics foundation model deployable on consumer hardware.
 
 \subsubsection*{Robust, Failure-Aware, and Long-Horizon Embodied AI}
 
-\textbf{Objective 2: Robust, Failure-Aware, and Long-Horizon Embodied AI.} Real-world deployment demands more than high average-case performance: robots must detect when they are failing, diagnose the cause, and recover without human intervention. This objective develops the science and engineering of \textit{failure-aware embodied AI}. Drawing on my work on AHA [AHA] and FailSafe [FailSafe]---which introduce failure-reasoning VLMs for detection, explanation, and recovery in manipulation---I will build a unified framework that closes the loop between perception, prediction, failure diagnosis, and replanning. Complementary work on memory-augmented architectures [SAM2Act] will extend reliable embodied AI to tasks requiring long-horizon state tracking and contextual memory.
+\textbf{Objective 2: Robust, Failure-Aware, and Long-Horizon Embodied AI.} Real-world deployment demands more than high average-case performance: robots must detect when they are failing, diagnose the cause, and recover without human intervention. This objective develops the science and engineering of \textit{failure-aware embodied AI}. Drawing on my work on AHA \citep{aha} and FailSafe \citep{failsafe}---which introduce failure-reasoning VLMs for detection, explanation, and recovery in manipulation---I will build a unified framework that closes the loop between perception, prediction, failure diagnosis, and replanning. Complementary work on memory-augmented architectures \citep{sam2act} will extend reliable embodied AI to tasks requiring long-horizon state tracking and contextual memory.
 
 \subsubsection*{Open Ecosystems, Benchmarks, and Data for Embodied AI}
 
-\textbf{Objective 3: Open Ecosystems, Benchmarks, and Data for Embodied AI.} Progress in embodied AI is bottlenecked by the scarcity of open, large-scale, and diverse robot data. This objective builds the infrastructure layer that the field needs: open data collection pipelines that do not require expensive teleoperation [AR2-D2, Manipulate-Anything]; large-scale navigation and manipulation benchmarks that stress-test generalization [COLOSSEUM, MolmoSpaces]; and multimodal spatial grounding benchmarks for evaluating foundation models [SAT, PointArena]. At NUS, I will establish the MAGIC Lab as a hub for releasing open robotics data, models, and benchmarks at a scale not previously available to the community.
+\textbf{Objective 3: Open Ecosystems, Benchmarks, and Data for Embodied AI.} Progress in embodied AI is bottlenecked by the scarcity of open, large-scale, and diverse robot data. This objective builds the infrastructure layer that the field needs: open data collection pipelines that do not require expensive teleoperation \citep{ar2d2, manipulateanything}; large-scale navigation and manipulation benchmarks that stress-test generalization \citep{colosseum, molmospaces}; and multimodal spatial grounding benchmarks for evaluating foundation models \citep{sat, pointarena}. At NUS, I will establish the MAGIC Lab as a hub for releasing open robotics data, models, and benchmarks at a scale not previously available to the community.
 
 \section{Background \& Significance}
 
-Embodied AI---the ability of machines to perceive, reason about, and act in the physical world---represents one of the most consequential open frontiers in artificial intelligence.\footnote{Y.~LeCun, ``A path towards autonomous machine intelligence,'' \textit{Open Review}, 2022.} A robot that can reliably assist in home environments, hospitals, laboratories, or disaster sites would transform human productivity and quality of life. Despite enormous investment, today's robotic systems remain fragile outside tightly controlled settings: they struggle with novel objects, unexpected perturbations, long-horizon dependencies, and the rich variability of real human environments.
+Embodied AI---the ability of machines to perceive, reason about, and act in the physical world---represents one of the most consequential open frontiers in artificial intelligence \citep{lecun2022path}. A robot that can reliably assist in home environments, hospitals, laboratories, or disaster sites would transform human productivity and quality of life. Despite enormous investment, today's robotic systems remain fragile outside tightly controlled settings: they struggle with novel objects, unexpected perturbations, long-horizon dependencies, and the rich variability of real human environments.
 
-The dominant paradigm for robot learning---end-to-end imitation learning from large datasets of human demonstrations---has produced impressive results on in-distribution benchmarks.\footnote{T.~Z.~Zhao et al., ``Learning fine-grained bimanual manipulation with low-cost hardware,'' \textit{RSS}, 2023.}\textsuperscript{,}\footnote{A.~Brohan et al., ``RT-2: Vision-language-action models transfer web knowledge to robotic control,'' \textit{CoRL}, 2023.} However, these systems inherit a critical structural weakness: they compress spatial structure into opaque latent representations, with no explicit encoding of geometry, depth, or physical dynamics. As a result, they generalize poorly to out-of-distribution lighting, object poses, or task compositions, and cannot diagnose or recover from failures---because they have no internal model of what went wrong.
+The dominant paradigm for robot learning---end-to-end imitation learning from large datasets of human demonstrations---has produced impressive results on in-distribution benchmarks \citep{zhao2023learning, brohan2023rt2}. However, these systems inherit a critical structural weakness: they compress spatial structure into opaque latent representations, with no explicit encoding of geometry, depth, or physical dynamics. As a result, they generalize poorly to out-of-distribution lighting, object poses, or task compositions, and cannot diagnose or recover from failures---because they have no internal model of what went wrong.
 
-My research addresses this gap by reconceiving embodied AI through the lens of \textit{spatial intelligence}. The key insight is that language and action can and should be mediated by explicit spatial representations: image-space affordance points [RoboPoint], dynamic 3D geometry [WildDet3D], spatial aptitude benchmarks [SAT], and depth-conditioned action trajectories [MolmoAct]. These intermediate representations make policies interpretable, editable, and generalizable in ways that purely end-to-end models are not.
+My research addresses this gap by reconceiving embodied AI through the lens of \textit{spatial intelligence}. The key insight is that language and action can and should be mediated by explicit spatial representations: image-space affordance points \citep{robopoint}, dynamic 3D geometry \citep{wilddet3d}, spatial aptitude benchmarks \citep{sat}, and depth-conditioned action trajectories \citep{molmoact}. These intermediate representations make policies interpretable, editable, and generalizable in ways that purely end-to-end models are not.
 
-This approach is validated by concrete results. RoboPoint [RoboPoint] has become a widely used baseline for language-grounded manipulation, and its data and task formulation have influenced spatial grounding in frontier VLMs. PointArena [PointArena] is now a de facto evaluation benchmark across model families including Molmo, Gemini, and Qwen. MolmoAct [MolmoAct] achieves 70.5\% zero-shot on SimplerEnv Visual Matching, surpassing $\pi_0$ and GR00T N1.5, with a 23.3\% improvement in OOD generalization. MolmoAct2 [MolmoAct2] has been independently deployed in kitchen, café, and wetlab settings including the Stanford CRISPR Lab. WildDet3D [WildDet3D] sets a new state of the art on Omni3D and has been deployed on iPhone, AR headsets, and robot manipulation systems. THE COLOSSEUM [COLOSSEUM] is a widely adopted benchmark for evaluating manipulation generalization.
+This approach is validated by concrete results. RoboPoint \citep{robopoint} has become a widely used baseline for language-grounded manipulation, and its data and task formulation have influenced spatial grounding in frontier VLMs. PointArena \citep{pointarena} is now a de facto evaluation benchmark across model families including Molmo, Gemini, and Qwen. MolmoAct \citep{molmoact} achieves 70.5\% zero-shot on SimplerEnv Visual Matching, surpassing $\pi_0$ \citep{pi0} and GR00T N1.5, with a 23.3\% improvement in OOD generalization. MolmoAct2 \citep{molmoact2} has been independently deployed in kitchen, café, and wetlab settings including the Stanford CRISPR Lab. WildDet3D \citep{wilddet3d} sets a new state of the art on Omni3D and has been deployed on iPhone, AR headsets, and robot manipulation systems. THE COLOSSEUM \citep{colosseum} is a widely adopted benchmark for evaluating manipulation generalization.
 
 At NUS, I am uniquely positioned to advance this program. Singapore's strength in robotics manufacturing, healthcare automation, and smart environments creates natural application partners. My role as director of the MAGIC Lab will let me build the team, infrastructure, and collaborations needed to scale open embodied AI research.
 
@@ -69,31 +70,31 @@ My research program is structured around four categories of work: \textbf{(1) Em
 \subsubsection*{Objective 1: Embodied Foundation Models that Reason in Space}
 
 \begin{itemize}
-  \item \textbf{Scaling Action Reasoning Models (ARMs)} [\textit{Capabilities, Platforms}]: Building on MolmoAct and MolmoAct2, I will develop the next generation of ARMs that scale to bimanual and mobile manipulation. Key research questions include how to learn depth-conditioned action representations from diverse multi-embodiment data, how to compress 3D scene representations for low-latency inference on edge devices, and how to leverage internet-scale vision-language pretraining to bootstrap spatial action policies with minimal robot data. I will release open model weights, tokenizers, and training code to enable broad community adoption.
+  \item \textbf{Scaling Action Reasoning Models (ARMs)} [\textit{Capabilities, Platforms}]: Building on MolmoAct \citep{molmoact} and MolmoAct2 \citep{molmoact2}, I will develop the next generation of ARMs that scale to bimanual and mobile manipulation. Key research questions include how to learn depth-conditioned action representations from diverse multi-embodiment data, how to compress 3D scene representations for low-latency inference on edge devices, and how to leverage internet-scale vision-language pretraining to bootstrap spatial action policies with minimal robot data. I will release open model weights, tokenizers, and training code to enable broad community adoption.
 
-  \item \textbf{3D Spatial Perception for Robotics} [\textit{Capabilities, Foundations}]: Reliable robot action depends on reliable 3D perception. This project will extend WildDet3D [WildDet3D] toward a general open-vocabulary monocular 3D detection and scene reconstruction system suited to robot manipulation settings. I will develop geometry-aware architectures unifying text, point, and box prompts, and curate the next generation of large-scale 3D detection datasets to train and evaluate these systems.
+  \item \textbf{3D Spatial Perception for Robotics} [\textit{Capabilities, Foundations}]: Reliable robot action depends on reliable 3D perception. This project will extend WildDet3D \citep{wilddet3d} toward a general open-vocabulary monocular 3D detection and scene reconstruction system suited to robot manipulation settings. I will develop geometry-aware architectures unifying text, point, and box prompts, and curate the next generation of large-scale 3D detection datasets to train and evaluate these systems.
 
-  \item \textbf{Language-Grounded Spatial Affordance Learning} [\textit{Capabilities, Foundations}]: Extending RoboPoint [RoboPoint] and PointArena [PointArena], this project will develop models that predict richer affordance representations---including contact points, force directions, trajectory waypoints, and free-space paths---from natural language instructions. I will systematically study the relationship between pointing-based affordance interfaces and downstream task success, developing the theory of spatial affordance grounding.
+  \item \textbf{Language-Grounded Spatial Affordance Learning} [\textit{Capabilities, Foundations}]: Extending RoboPoint \citep{robopoint} and PointArena \citep{pointarena}, this project will develop models that predict richer affordance representations---including contact points, force directions, trajectory waypoints, and free-space paths---from natural language instructions. I will systematically study the relationship between pointing-based affordance interfaces and downstream task success, developing the theory of spatial affordance grounding.
 \end{itemize}
 
 \subsubsection*{Objective 2: Robust, Failure-Aware, and Long-Horizon Embodied AI}
 
 \begin{itemize}
-  \item \textbf{Failure Detection, Diagnosis, and Recovery} [\textit{Capabilities, Applications}]: AHA [AHA] and FailSafe [FailSafe] established that VLMs can detect and reason about manipulation failures. This project will close the full failure-recovery loop: online detection of failure states, generation of verbal diagnoses and corrective plans, and execution of recovery actions. I will develop a unified architecture that integrates failure reasoning with the ARM framework, so that spatial representations serve not only forward prediction but also failure attribution.
+  \item \textbf{Failure Detection, Diagnosis, and Recovery} [\textit{Capabilities, Applications}]: AHA \citep{aha} and FailSafe \citep{failsafe} established that VLMs can detect and reason about manipulation failures. This project will close the full failure-recovery loop: online detection of failure states, generation of verbal diagnoses and corrective plans, and execution of recovery actions. I will develop a unified architecture that integrates failure reasoning with the ARM framework, so that spatial representations serve not only forward prediction but also failure attribution.
 
-  \item \textbf{Memory-Augmented Embodied AI for Long-Horizon Tasks} [\textit{Capabilities, Platforms}]: SAM2Act [SAM2Act] demonstrated that integrating visual foundation models with explicit memory enables success on long-horizon manipulation tasks. This project will generalize this finding, developing a memory architecture that maintains spatial state estimates across extended task horizons, integrates new observations via differentiable attention over spatially indexed memory, and supports symbolic sub-task planning over the memory state.
+  \item \textbf{Memory-Augmented Embodied AI for Long-Horizon Tasks} [\textit{Capabilities, Platforms}]: SAM2Act \citep{sam2act} demonstrated that integrating visual foundation models with explicit memory enables success on long-horizon manipulation tasks. This project will generalize this finding, developing a memory architecture that maintains spatial state estimates across extended task horizons, integrates new observations via differentiable attention over spatially indexed memory, and supports symbolic sub-task planning over the memory state.
 
-  \item \textbf{Sim-to-Real Transfer via Spatial Invariances} [\textit{Capabilities, Foundations}]: A core bottleneck to real-world robot deployment is the sim-to-real gap. This project will study which spatial representations---depth maps, surface normals, optical flow, object-centric features---are most invariant across the simulation-to-real boundary, developing training objectives that explicitly encourage spatial representations to be domain-agnostic. This work will leverage the diverse perturbations of THE COLOSSEUM benchmark [COLOSSEUM] as a testbed.
+  \item \textbf{Sim-to-Real Transfer via Spatial Invariances} [\textit{Capabilities, Foundations}]: A core bottleneck to real-world robot deployment is the sim-to-real gap. This project will study which spatial representations---depth maps, surface normals, optical flow, object-centric features---are most invariant across the simulation-to-real boundary, developing training objectives that explicitly encourage spatial representations to be domain-agnostic. This work will leverage the diverse perturbations of THE COLOSSEUM benchmark \citep{colosseum} as a testbed.
 \end{itemize}
 
 \subsubsection*{Objective 3: Open Ecosystems, Benchmarks, and Data for Embodied AI}
 
 \begin{itemize}
-  \item \textbf{MolmoSpaces: Open Ecosystem for Navigation and Manipulation} [\textit{Platforms, Applications}]: MolmoSpaces [MolmoSpaces] establishes a large-scale open ecosystem for training and evaluating embodied agents across navigation and manipulation tasks. At NUS, I will extend this ecosystem to cover Southeast Asian indoor environments (offices, healthcare facilities, smart homes), releasing environment assets, task suites, and evaluation protocols that reflect the diversity of real deployment contexts.
+  \item \textbf{MolmoSpaces: Open Ecosystem for Navigation and Manipulation} [\textit{Platforms, Applications}]: MolmoSpaces \citep{molmospaces} establishes a large-scale open ecosystem for training and evaluating embodied agents across navigation and manipulation tasks. At NUS, I will extend this ecosystem to cover Southeast Asian indoor environments (offices, healthcare facilities, smart homes), releasing environment assets, task suites, and evaluation protocols that reflect the diversity of real deployment contexts.
 
-  \item \textbf{Automated Robot Data Collection without Teleoperation} [\textit{Platforms, Foundations}]: AR2-D2 [AR2-D2] and Manipulate-Anything [Manipulate-Anything] demonstrated that robots can be trained from scripted demonstrations and VLM-guided autonomous interaction, removing the human-in-the-loop bottleneck. I will scale these paradigms, developing a fully automated data flywheel: the robot proposes tasks, attempts them, collects diverse demonstrations via language-guided policy search, and automatically curates successful trajectories for training.
+  \item \textbf{Automated Robot Data Collection without Teleoperation} [\textit{Platforms, Foundations}]: AR2-D2 \citep{ar2d2} and Manipulate-Anything \citep{manipulateanything} demonstrated that robots can be trained from scripted demonstrations and VLM-guided autonomous interaction, removing the human-in-the-loop bottleneck. I will scale these paradigms, developing a fully automated data flywheel: the robot proposes tasks, attempts them, collects diverse demonstrations via language-guided policy search, and automatically curates successful trajectories for training.
 
-  \item \textbf{Embodied Spatial Intelligence Benchmarks} [\textit{Foundations, Platforms}]: SAT [SAT] and PointArena [PointArena] measure spatial reasoning in multimodal LLMs. THE COLOSSEUM [COLOSSEUM] measures manipulation generalization. I will develop the next generation of embodied evaluation suites that test the full stack: from visual grounding and 3D perception to action planning and failure recovery, providing the community with rigorous, standardized metrics for tracking progress in embodied spatial intelligence.
+  \item \textbf{Embodied Spatial Intelligence Benchmarks} [\textit{Foundations, Platforms}]: SAT \citep{sat} and PointArena \citep{pointarena} measure spatial reasoning in multimodal LLMs. THE COLOSSEUM \citep{colosseum} measures manipulation generalization. I will develop the next generation of embodied evaluation suites that test the full stack: from visual grounding and 3D perception to action planning and failure recovery, providing the community with rigorous, standardized metrics for tracking progress in embodied spatial intelligence.
 \end{itemize}
 
 \section{Milestones \& Deliverables}
@@ -120,7 +121,7 @@ Y1 &
   \item Recruitment of initial team of RAs / PhD students / post-docs
   \item Paper on scaling ARMs to bimanual manipulation (MolmoAct3 prototype)
   \item Release of WildDet3D v2 with expanded categories and robot-scene training data
-  \item Paper on memory-augmented long-horizon manipulation (extending SAM2Act)
+  \item Paper on memory-augmented long-horizon manipulation (extending SAM2Act \citep{sam2act})
 \end{itemize} \\
 Y1.5 &
 \begin{itemize}\setlength\itemsep{0pt}
@@ -131,13 +132,13 @@ Y1.5 &
 Y2 &
 \begin{itemize}\setlength\itemsep{0pt}
   \item Paper on unified failure detection, diagnosis, and recovery (FailureRecovery system)
-  \item Initial release of automated data collection pipeline (AR2-D2 v2)
+  \item Initial release of automated data collection pipeline (AR2-D2 v2, extending \citep{ar2d2})
   \item Establish collaboration with Singapore healthcare / manufacturing partners for real-world deployment
 \end{itemize} \\
 Y2.5 &
 \begin{itemize}\setlength\itemsep{0pt}
-  \item MolmoSpaces-SEA first release with indoor navigation and manipulation tasks
-  \item Paper on sim-to-real transfer via spatial invariances with COLOSSEUM testbed
+  \item MolmoSpaces-SEA first release with indoor navigation and manipulation tasks \citep{molmospaces}
+  \item Paper on sim-to-real transfer via spatial invariances with COLOSSEUM testbed \citep{colosseum}
   \item Paper on 3D spatial perception with domain-agnostic representations
 \end{itemize} \\
 Y3 &
@@ -160,66 +161,7 @@ Y4+ &
 \bottomrule
 \end{tabular}
 
-\section*{Key Papers \& References}
-
-\begin{description}
-  \item[\textbf{[MolmoAct]}] J.~Lee*, J.~Duan*, H.~Fang*, Y.~Deng, S.~Liu, B.~Li, B.~Fang, J.~Zhang, Y.~R.~Wang, S.~Lee, W.~Han, W.~Pumacay, A.~Wu, R.~Hendrix, K.~Farley, E.~VanderBilt, A.~Farhadi, D.~Fox, and R.~Krishna, \textbf{``MolmoAct: Action Reasoning Models that Can Reason in Space,''} \textit{IEEE International Conference on Robotics and Automation (ICRA)}, 2026.
-
-  \item[\textbf{[MolmoAct2]}] H.~Fang*, J.~Duan*, D.~Clay, S.~Wang, S.~Liu, W.~Huang, X.~Fan, W.-C.~Tsai, S.~Chen, Y.~R.~Wang, et~al., \textbf{``MolmoAct2: Action Reasoning Models for Real-World Deployment,''} \textit{arXiv preprint arXiv:2605.02881}, 2026.
-
-  \item[\textbf{[MolmoSpaces]}] J.~Duan et~al., \textbf{``MolmoSpaces: Large-Scale Open Ecosystem for Robot Navigation and Manipulation,''} \textit{Robotics: Science and Systems (RSS)}, 2026. \textbf{Oral}.
-
-  \item[\textbf{[AHA]}] J.~Duan, \textbf{``AHA: A Vision-Language-Model for Detecting and Reasoning over Failures in Robotic Manipulation,''} \textit{International Conference on Learning Representations (ICLR)}, 2025.
-
-  \item[\textbf{[FailSafe]}] Z.~Lin, J.~Duan, H.~Fang, D.~Fox, R.~Krishna, C.~Tan, and B.~Wen, \textbf{``FailSafe: Reasoning and Recovery from Failures in Vision-Language-Action Models,''} \textit{IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 2026.
-
-  \item[\textbf{[SAM2Act]}] H.~Fang, M.~Grotz, W.~Pumacay, Y.~R.~Wang, D.~Fox, R.~Krishna, and J.~Duan, \textbf{``SAM2Act: Integrating Visual Foundation Model with a Memory Architecture for Robotic Manipulation,''} \textit{International Conference on Machine Learning (ICML)}, 2025. \textbf{Best Paper, RemembeRL @ CoRL 2025}.
-
-  \item[\textbf{[COLOSSEUM]}] W.~Pumacay*, I.~Singh*, J.~Duan*, R.~Krishna, J.~Thomason, and D.~Fox, \textbf{``THE COLOSSEUM: A Benchmark for Evaluating Generalization for Robotic Manipulation,''} \textit{Robotics: Science and Systems (RSS)}, 2024. \textbf{Oral}.
-
-  \item[\textbf{[Manipulate-Anything]}] J.~Duan, W.~Yuan, W.~Pumacay, Y.~R.~Wang, K.~Ehsani, D.~Fox, and R.~Krishna, \textbf{``Manipulate-Anything: Automating Real-World Robots using Vision-Language Models,''} \textit{Conference on Robot Learning (CoRL)}, 2024.
-
-  \item[\textbf{[AR2-D2]}] J.~Duan, Y.~R.~Wang, M.~Shridhar, D.~Fox, and R.~Krishna, \textbf{``AR2-D2: Training a Robot Without a Robot,''} \textit{Conference on Robot Learning (CoRL)}, 2023.
-
-  \item[\textbf{[RoboPoint]}] W.~Yuan*, J.~Duan*, V.~Blukis, W.~Pumacay, R.~Krishna, A.~Murali, A.~Mousavian, and D.~Fox, \textbf{``RoboPoint: A Vision-Language Model for Spatial Affordance Prediction for Robotics,''} \textit{arXiv preprint arXiv:2406.10721}, 2024.
-
-  \item[\textbf{[WildDet3D]}] W.~Huang, J.~Zhang, S.~Li, T.~Jia, J.~Duan, Y.~Cheng, J.~Cho, M.~Wallingford, R.~Soraki, C.~D.~Kim, et~al., \textbf{``WildDet3D: Scaling Promptable 3D Detection in the Wild,''} \textit{arXiv preprint arXiv:2604.08626}, 2026.
-
-  \item[\textbf{[SAT]}] A.~Ray, J.~Duan, R.~Tan, D.~Bashkirova, R.~Hendrix, K.~Ehsani, A.~Kembhavi, B.~A.~Plummer, R.~Krishna, K.-H.~Zeng, et~al., \textbf{``SAT: Spatial Aptitude Training for Multimodal Language Models,''} \textit{arXiv preprint arXiv:2412}, 2024.
-
-  \item[\textbf{[PointArena]}] L.~Cheng*, J.~Duan*, Y.~R.~Wang, H.~Fang, B.~Li, Y.~Huang, E.~Wang, A.~Eftekhar, J.~Lee, W.~Yuan, et~al., \textbf{``PointArena: Probing Multimodal Grounding through Language-Guided Pointing,''} \textit{arXiv preprint arXiv:2505.09990}, 2025.
-\end{description}
-
-\section*{Other References}
-
-\begin{enumerate}
-  \item Y.~LeCun, ``A path towards autonomous machine intelligence,'' \textit{Open Review preprint}, 2022.
-
-  \item T.~Z.~Zhao, V.~Kumar, S.~Levine, and C.~Finn, ``Learning fine-grained bimanual manipulation with low-cost hardware,'' in \textit{Robotics: Science and Systems}, 2023.
-
-  \item A.~Brohan, N.~Brown, J.~Carbajal, Y.~Chebotar, X.~Chen, K.~Choromanski, T.~Ding, D.~Driess, A.~Dubowsky, C.~Finn, et al., ``RT-2: Vision-language-action models transfer web knowledge to robotic control,'' in \textit{Conference on Robot Learning}, 2023.
-
-  \item K.~Black, N.~Brown, D.~Driess, A.~Esmail, M.~Equi, C.~Finn, N.~Fusai, L.~Groom, K.~Hausman, B.~Ichter, et al., ``$\pi_0$: A vision-language-action flow model for general robot control,'' \textit{arXiv preprint arXiv:2410.24164}, 2024.
-
-  \item NVIDIA, ``GR00T N1.5: An open foundation model for generalist humanoid robots,'' \textit{arXiv preprint}, 2025.
-
-  \item C.~Chi, Z.~Xu, S.~Feng, E.~Cousineau, Y.~Du, B.~Burchfiel, R.~Tedrake, and S.~Song, ``Diffusion policy: Visuomotor policy learning via action diffusion,'' \textit{International Journal of Robotics Research}, 2023.
-
-  \item A.~Shridhar, L.~Manuelli, and D.~Fox, ``Perceiver-actor: A multi-task transformer for robotic manipulation,'' in \textit{Conference on Robot Learning}, 2022.
-
-  \item J.~Gu, S.~Kirmani, P.~Wohlhart, Y.~Lu, M.~G.~Arenas, K.~Rao, W.~Yu, C.~Fu, K.~Gopalakrishnan, Z.~Xu, et al., ``RT-Trajectory: Robotic task generalization via hindsight trajectory templates,'' in \textit{International Conference on Learning Representations}, 2024.
-
-  \item S.~Zhou, F.~F.~Xu, H.~Zhu, X.~Zhou, R.~Lo, A.~Sridhar, X.~Cheng, T.~Ou, Y.~Bisk, D.~Fried, U.~Alon, and G.~Neubig, ``WebArena: A realistic web environment for building autonomous agents,'' in \textit{The Twelfth International Conference on Learning Representations}, 2024.
-
-  \item M.~Shridhar, J.~Thomason, D.~Gordon, Y.~Bisk, W.~Han, R.~Mottaghi, L.~Zettlemoyer, and D.~Fox, ``ALFRED: A benchmark for interpreting grounded instructions for everyday tasks,'' in \textit{IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2020.
-
-  \item K.~Ehsani, W.~Han, A.~Herrasti, E.~VanderBilt, L.~Weihs, E.~Kolve, A.~Farhadi, J.~Salvador, R.~Mottaghi, and A.~Kembhavi, ``ManipulaTHOR: A framework for visual object manipulation,'' in \textit{IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2021.
-
-  \item Y.~Du, K.~Yang, P.~A.~Paull, J.~B.~Tenenbaum, and J.~Andreas, ``Learning universal policies via text-guided video generation,'' in \textit{Advances in Neural Information Processing Systems}, 2023.
-
-  \item A.~Kirillov, E.~Mintun, N.~Ravi, H.~Mao, C.~Rolland, L.~Gustafson, T.~Xiao, S.~Whitehead, A.~C.~Berg, W.-Y.~Lo, P.~Dollár, and R.~Girshick, ``Segment anything,'' in \textit{IEEE/CVF International Conference on Computer Vision}, 2023.
-
-  \item R.~Krishna, Y.~Zhu, O.~Groth, J.~Johnson, K.~Hata, J.~Kravitz, S.~Chen, Y.~Kalantidis, L.-J.~Li, D.~A.~Shamma, M.~S.~Bernstein, and L.~Fei-Fei, ``Visual genome: Connecting language and vision using crowdsourced dense image annotations,'' \textit{International Journal of Computer Vision}, vol.~123, pp.~32--73, 2017.
-\end{enumerate}
+\bibliographystyle{unsrt}
+\bibliography{references}
 
 \end{document}
